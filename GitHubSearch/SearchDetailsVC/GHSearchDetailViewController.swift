@@ -60,6 +60,23 @@ class GHSearchDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         getUserDetails()
     }
+    // MARK: - Btn Action
+    
+    @IBAction func btnShareAction(_ sender: Any) {
+        let text = "Hey, Checkout this Git User \(modelDetails?.login ?? "")"
+        let image = UIImage(named: "gitHubIcon")
+        if let urlUser = modelDetails?.url {
+            let escapedAddress = urlUser.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            let myWebsite = NSURL(string:"\(escapedAddress ?? "NA")")
+            let shareAll = [text , image! , myWebsite!] as [Any]
+            let activityViewController = UIActivityViewController(activityItems: shareAll, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
+        }
+        
+    }
+    
+    
     
     // MARK: - API
     
